@@ -20,4 +20,5 @@ venv/
 Thumbs.db
 
 models/piper/*
+
 *.wav

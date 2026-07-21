@@ -11,12 +11,16 @@ MODEL_PATH = (
     / "en_GB-alan-medium.onnx"
 )
 
+Output_path=(
+    Path(__file__).resolve().parent.parent/"audio"/"speachtts.wav")
+
+
 config=SynthesisConfig(length_scale=0.8)
 
 VOICE=PiperVoice.load(MODEL_PATH)
 
 def speak(text:str):
-    with wave.open("output.wav","wb") as wav_file:
+    with wave.open(str(Output_path),"wb") as wav_file:
         VOICE.synthesize_wav(text,wav_file,syn_config=config)
 
-    winsound.PlaySound("output.wav",winsound.SND_FILENAME)
+    winsound.PlaySound(str(Output_path),winsound.SND_FILENAME)
