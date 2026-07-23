@@ -1,11 +1,16 @@
 Working Algorithm: app_locator.py
-1.The program starts and asks the developer to enter the name of an executable file (for example, Code.exe or chrome.exe).
-2.A list of common installation directories (such as C:\Program Files, C:\Program Files (x86), and the user's AppData\Local) is prepared.
-3.The program searches each directory one at a time.
-4.For every directory, os.walk() automatically visits every folder and subfolder.
-5.Inside each folder, the program examines every file.
-6.The current filename is compared with the executable name entered by the developer.
-7.If the filename matches, the complete path is constructed.
-8.The full path is displayed on the screen.
-9.The search immediately stops because the required executable has been found.
-10.If all directories are searched without finding the executable, the program informs the developer that the application could not be located.
+1.The program starts and receives the name of an executable file (for example, Code.exe or chrome.exe).
+2.The program loads the previously saved application paths from app_paths.json into a dictionary.
+3.The program checks whether the executable name already exists in the dictionary.
+4.If the executable is found in the dictionary, the stored full path is returned immediately, and the search ends.
+5.If the executable is not found in the dictionary, a list of common installation directories (such as C:\Program Files, C:\Program Files (x86), and the user's AppData\Local) is prepared.
+6.The program searches each directory one at a time.
+7.For every directory, it first checks whether the directory exists. If it does not exist, it skips that directory and continues with the next one.
+8.For every valid directory, os.walk() automatically visits every folder and subfolder.
+9.Inside each folder, the program examines every file.
+10.The current filename is compared with the required executable name.
+11.If the filename matches, the complete path of the executable is constructed.
+12.The executable name and its full path are added to the dictionary.
+13.The updated dictionary is saved to app_paths.json for future use.
+14.The full path is returned, and the search stops immediately.
+15.If all directories are searched without finding the executable, the program returns None, indicating that the application could not be located.
