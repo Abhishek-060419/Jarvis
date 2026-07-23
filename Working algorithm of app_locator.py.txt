@@ -1,0 +1,11 @@
+Working Algorithm: app_locator.py
+1.The program starts and asks the developer to enter the name of an executable file (for example, Code.exe or chrome.exe).
+2.A list of common installation directories (such as C:\Program Files, C:\Program Files (x86), and the user's AppData\Local) is prepared.
+3.The program searches each directory one at a time.
+4.For every directory, os.walk() automatically visits every folder and subfolder.
+5.Inside each folder, the program examines every file.
+6.The current filename is compared with the executable name entered by the developer.
+7.If the filename matches, the complete path is constructed.
+8.The full path is displayed on the screen.
+9.The search immediately stops because the required executable has been found.
+10.If all directories are searched without finding the executable, the program informs the developer that the application could not be located.
