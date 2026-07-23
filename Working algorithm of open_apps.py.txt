@@ -1,0 +1,12 @@
+Working Algorithm: open_apps.py
+1.The program starts and receives the name of an application from the developer or parser (for example, chrome or vscode).
+2.The application name is converted to lowercase to ensure case-insensitive matching.
+3.The program searches the APP_ALIASES dictionary for the corresponding executable name.
+4.f the application name is not present in the dictionary, the program displays an "Unknown application" message and stops.
+5.If the application name is found, the corresponding executable name (such as chrome.exe or Code.exe) is obtained.
+6.The program calls the find_executable() function and passes the executable name as an argument.
+7.The find_executable() function returns the complete path of the executable if it is found.
+8.If no executable path is returned, the program displays an "Executable not found" message and stops.
+9.If a valid executable path is returned, the program launches the application using subprocess.Popen().
+10.The application starts running, while the Python program continues executing without waiting for the application to close.
+11.The program ends.
