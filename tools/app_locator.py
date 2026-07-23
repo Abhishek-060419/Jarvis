@@ -17,7 +17,7 @@ def load_apps_path():
 def save_apps_path(paths):
     with open("data/apps_path.json","w") as file:
         json.dump(paths, file, indent=4)
-        
+
 
 def find_executable(exc_name):
     paths=load_apps_path()
@@ -32,7 +32,7 @@ def find_executable(exc_name):
             for file in files:
                 if file==exc_name:
                     full_path= os.path.join(root,file)
-                    path[exc_name]=full_path
+                    paths[exc_name]=full_path
                     save_apps_path(paths)
                     return full_path
 
