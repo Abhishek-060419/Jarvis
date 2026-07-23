@@ -1,0 +1,11 @@
+Working Algorithm:
+1.The transcribe() function is called with the path of the recorded audio file as input.
+2.The Faster-Whisper model is loaded (only once when the program starts) and is ready to perform speech recognition.
+3.The input audio file path is passed to the Whisper model.
+4.The Whisper model opens the audio file and reads the recorded audio samples.
+5.The model analyzes the audio, converts it into internal features, and processes it through the neural network to recognize the spoken words.
+6.The recognized speech is divided into one or more segment objects, where each segment contains information such as the recognized text and its corresponding timestamps.
+7.Along with the segments, the Whisper model also returns additional transcription information (metadata) such as the detected language and confidence.
+8.The program iterates through each segment returned by the model.
+9.The text from every segment (segment.text) is extracted and combined into a single sentence using Python's join() method, inserting a space between consecutive segments.
+10.The completed text string is returned by the transcribe() function to the calling program, where it can be used for further processing (such as command parsing).

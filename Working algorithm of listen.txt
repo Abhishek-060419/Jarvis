@@ -1,0 +1,24 @@
+Working Algorithm
+1.The listen() function is called to start recording.
+2.Before recording starts, all previously stored audio chunks are cleared and the silence counter is reset to zero.
+3.An InputStream is created to receive audio continuously from the microphone.
+4.The input stream is started, which begins capturing audio.
+5.Instead of recording one large audio file, the microphone continuously sends small chunks of audio data.
+6.Every time a new chunk arrives, the audio library automatically calls the process_audio() callback function.
+7.Inside the callback:
+	The current audio chunk is copied and stored in audio_chunks.
+	The average loudness (volume) of the chunk is calculated.
+	The calculated volume is compared with the predefined THRESHOLD.
+8.If the volume is below the threshold:
+	The chunk is considered silence.
+	silence_count is incremented.
+9.If the volume is above the threshold:
+	The chunk is considered speech.
+	silence_count is reset to zero because speech has resumed.
+10.While the callback continues processing incoming chunks, the listen() function periodically checks whether the silence counter has      	reached the predefined SILENCE_LIMIT.
+11.As long as the silence limit has not been reached, recording continues normally.
+12.Once enough consecutive silent chunks have been detected, listen() determines that the user has finished speaking.
+13.The input stream is stopped, so no more audio chunks are received.
+14.All stored audio chunks are joined together into one continuous NumPy array using np.concatenate().
+15.The complete audio recording is saved as recording.wav using the soundfile library.
+16.Finally, the path of the saved recor

@@ -1,0 +1,11 @@
+Working Algorithm
+1.The speak() function is called with a text string as input.
+2.The Piper voice model is loaded (only once when the program starts) and is ready to synthesize speech.
+3.The input text is passed to the Piper model.
+4.The Piper model analyzes the text and converts it into speech by generating raw audio samples.
+5.These generated audio samples are not immediately audible; they exist as digital audio data in memory.
+6.A WAV file is created using Python's wave module.
+7.The generated audio samples are written into the WAV file along with the required audio metadata (sample rate, number of channels, sample width, etc.).
+8.Once all audio samples have been written, the WAV file is closed and saved.
+9.The saved WAV file is played through the computer's speakers using the winsound library.
+10.After playback finishes, the speak() function ends, and the assistant is ready for the next command.
