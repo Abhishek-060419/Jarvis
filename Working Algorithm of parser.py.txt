@@ -1,0 +1,19 @@
+Working Algorithm
+1.The parse() function is called with the transcribed text string as input.
+2.The input text is converted to lowercase using lower() so that command recognition becomes case-insensitive.
+3.Before parsing begins, the text is passed to the normalize() function.
+4.The normalize() function scans the text for predefined multi-word phrases (such as "turn off" and "power off") and replaces them with a single standardized keyword (such as "shutdown"). This simplifies intent recognition and avoids handling multi-word keywords separately.
+5.(Version 1) The parser originally searched for commands using keyword in text, which searched the entire sentence as one string.
+6.This approach caused two problems:
+Commands were matched as substrings (e.g., "play" matched "display").
+Parameter extraction using string slicing depended on the keyword being at the beginning of the sentence.
+7.(Version 2 Improvement) To solve these issues, the normalized sentence is split into individual words using split(), creating a list of words.
+8.The parser iterates through every intent in the INTENTS dictionary.
+9.For each intent, the parser iterates through all of its associated keywords.
+10.Instead of checking keyword in text, the parser now checks keyword in words, ensuring that only complete words are matched.
+11.If a keyword is found, its position in the sentence is obtained using words.index(keyword).
+12.Everything appearing after the keyword is extracted by joining the remaining words using " ".join(words[index + 1:]). This becomes the command parameter.
+13.If no words remain after the keyword, the parameter is set to None.
+14.The parser immediately returns a dictionary containing the detected intent and its corresponding parameter.
+15.If all intents and keywords are checked without finding a match, the parser returns a dictionary with both "intent" and "parameter" set to None.
+16.The returned dictionary is then passed to the actions module, where the corresponding operation (such as opening an application, searching the web, or shutting down the system) will be executed.
