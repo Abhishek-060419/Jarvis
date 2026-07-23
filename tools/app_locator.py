@@ -1,4 +1,5 @@
 import os
+from config import SEARCH_PATHS
 
 folder=r"D:\Python\Jarvis"
 
