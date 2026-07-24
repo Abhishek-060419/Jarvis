@@ -28,6 +28,16 @@ APP_ALIASES = {
     "paint": "mspaint.exe",
     "task manager": "Taskmgr.exe",
 
+    # Office
+    "word": "WINWORD.EXE",
+    "microsoft word": "WINWORD.EXE",
+    "excel": "EXCEL.EXE",
+    "microsoft excel": "EXCEL.EXE",
+    "powerpoint": "POWERPNT.EXE",
+    "microsoft powerpoint":"POWERPNT.EXE",
+    "ppt":"POWERPNT.EXE",
+
+
     # Media
     "spotify": "Spotify.exe"
 }
