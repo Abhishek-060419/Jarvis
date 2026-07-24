@@ -1,30 +1,40 @@
-Working Algorithm.
-1.The listen() function is called to start recording.
-2.Before recording starts, all previously stored audio chunks are cleared, silence_count is reset to zero, and speech_detected is set to False.
-3.The current time is stored as start_time to track the maximum recording duration.
-4.An InputStream is created to receive audio continuously from the microphone.
+Working Algorithm
+1.The listen() function is called to start voice recording.
+2.Before recording begins, all previously stored audio chunks are cleared, silence_count is reset to zero, and speech_detected is set to False.
+3.Two timers are initialized:
+    waiting_start stores the current time to measure how long the system waits for the user to begin speaking.
+    speech_start is initialized to None because speech has not started yet.
+4.An InputStream is created to continuously receive audio from the microphone.
 5.The input stream starts capturing audio.
 6.Instead of recording one large audio file, the microphone continuously sends small chunks of audio data.
 7.Every time a new chunk arrives, the audio library automatically calls the process_audio() callback function.
 8.Inside the callback:
-Th e current audio chunk is copied and stored in audio_chunks.
-The average loudness (volume) of the chunk is calculated.
-The calculated volume is compared with the predefined THRESHOLD.
+    The average loudness (volume) of the current audio chunk is calculated.
+    The calculated volume is compared with the predefined THRESHOLD.
 9.If the volume is greater than the threshold:
-The chunk is considered speech.
-speech_detected is set to True.
-silence_count is reset to zero because the user is speaking.
-10.If the volume is below the threshold:
-If speech_detected is False, the silence is ignored because the user has not started speaking yet.
-If speech_detected is True, the chunk is considered silence after speech has started, and silence_count is incremented.
-11.While the callback continues processing incoming chunks, the listen() function continuously checks whether the elapsed recording time has exceeded MAX_RECORDING_TIME.
-12.If the maximum recording time is reached, recording is stopped.
-13.Otherwise, listen() continuously checks whether silence_count has reached the predefined SILENCE_LIMIT.
-14.As long as the silence limit has not been reached, recording continues normally.
-15.Once enough consecutive silent chunks have been detected after the user has spoken, listen() determines that the user has finished speaking.
-16.The input stream is stopped, so no more audio chunks are received.
-17.If no audio chunks were recorded, the function returns None.
-18.Otherwise, all stored audio chunks are combined into one continuous NumPy array using np.concatenate().
-19.The output directory is created if it does not already exist.
-20.The complete audio recording is saved as recording.wav using the soundfile library.
-21.Finally, the path of the saved recording is returned.
+    The chunk is considered speech.
+    speech_detected is set to True.
+    silence_count is reset to zero because the user is speaking.
+10.Once speech_detected becomes True:
+    Every incoming audio chunk is copied and stored in audio_chunks.
+    This prevents unnecessary silence from being stored before the user starts speaking.
+11.If the volume is below the threshold:
+    If speech_detected is False, the silence is ignored because the user has not started speaking yet.
+    If speech_detected is True, the chunk is considered silence after speech has started, and silence_count is incremented.
+12.While recording continues, listen() continuously checks whether speech has started.
+13.If speech has not started:
+    The elapsed waiting time is calculated using waiting_start.
+    If it exceeds WAIT_FOR_SPEECH_TIMEOUT, recording is stopped because no speech was detected.
+14.Once speech is detected for the first time:
+    If speech_start is None, it is assigned the current time.
+    This marks the beginning of the user's speech and starts the speech duration timer.
+15.While the user is speaking, listen() continuously checks whether silence_count has reached the predefined SILENCE_LIMIT.
+16.If enough consecutive silent chunks are detected after speech has started, listen() determines that the user has finished speaking and stops recording.
+17.During speech, listen() also checks whether the elapsed speech duration has exceeded MAX_SPEECH_DURATION.
+18.If the maximum speech duration is reached, recording is stopped to prevent excessively long recordings.
+19.The input stream is stopped, so no more audio chunks are received.
+20.If no audio chunks were recorded (the user never spoke), the function returns None.
+21.Otherwise, all stored audio chunks are combined into one continuous NumPy array using np.concatenate().
+22.The output directory is created if it does not already exist.
+23.The complete audio recording is saved as recording.wav using the soundfile library.
+24.Finally, the path of the saved recording is returned.
