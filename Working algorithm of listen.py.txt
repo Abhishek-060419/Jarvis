@@ -1,4 +1,4 @@
-Working Algorithm
+Working Algorithm.
 1.The listen() function is called to start recording.
 2.Before recording starts, all previously stored audio chunks are cleared, silence_count is reset to zero, and speech_detected is set to False.
 3.The current time is stored as start_time to track the maximum recording duration.
