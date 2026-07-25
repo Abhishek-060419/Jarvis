@@ -4,7 +4,7 @@ Working Algorithm
 3.Two timers are initialized:
     waiting_start stores the current time to measure how long the system waits for the user to begin speaking.
     speech_start is initialized to None because speech has not started yet.
-4.An InputStream is created to continuously receive audio from the microphone.
+4.An InputStream is created to continuously receive audio from the microphone.A beep sound is played to let the user know the microphone is ready to capture audio.
 5.The input stream starts capturing audio.
 6.Instead of recording one large audio file, the microphone continuously sends small chunks of audio data.
 7.Every time a new chunk arrives, the audio library automatically calls the process_audio() callback function.
