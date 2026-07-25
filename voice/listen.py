@@ -3,6 +3,7 @@ import soundfile as sf
 from pathlib import Path
 import numpy as np
 import time
+import winsound
 
 SAMPLE_RATE = 48000
 CHANNELS = 1
@@ -23,7 +24,6 @@ audio_chunks = []
 silence_count = 0
 speech_detected = False
 
-
 def process_audio(indata, frames, time_info, status):
     global silence_count, speech_detected
 
@@ -34,7 +34,13 @@ def process_audio(indata, frames, time_info, status):
 
     # Detect beginning of speech
     if volume > THRESHOLD:
-        speech_detected = True
+
+        # This block should execute ONLY once
+        if not speech_detected:
+            speech_detected = True
+
+
+        # Reset silence counter while speaking
         silence_count = 0
 
     # Store audio only after speech has started
@@ -44,7 +50,6 @@ def process_audio(indata, frames, time_info, status):
         # Count silence only after speech has started
         if volume <= THRESHOLD:
             silence_count += 1
-
 
 def listen():
     global silence_count, speech_detected
@@ -56,12 +61,16 @@ def listen():
     waiting_start = time.time()
     speech_start = None
 
+    print("🎙 Waiting for speech...")
+
     with sd.InputStream(
         samplerate=SAMPLE_RATE,
         channels=CHANNELS,
         callback=process_audio,
     ):
-
+        print("\n🎤 Recording started...")
+        winsound.Beep(1000, 150)
+        
         while True:
 
             # Waiting for user to start speaking

@@ -39,7 +39,11 @@ APP_ALIASES = {
 
 
     # Media
-    "spotify": "Spotify.exe"
+    "spotify": "Spotify.exe",
+
+    #Creative
+    "davinci": "Resolve.exe",
+    "davinci resolve": "Resolve.exe",
 }
 
 SEARCH_PATHS = [
