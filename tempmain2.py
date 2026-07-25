@@ -1,10 +1,15 @@
-from voice.listen import listen
+from tools.app_locator import find_executable
 
-print("Recording... Speak naturally.")
-audio_path = listen()
+apps = [
+    "chrome.exe",
+    "Code.exe",
+    "Spotify.exe",
+    "calc.exe",
+    "notepad.exe",
+    "cmd.exe"
+]
 
-if audio_path:
-    print(f"\nRecording saved to:\n{audio_path}")
-    print("Open the WAV file and listen to it.")
-else:
-    print("No recording was captured.")
+for app in apps:
+    print(f"\nSearching for: {app}")
+    path = find_executable(app)
+    print(f"Result: {path}")

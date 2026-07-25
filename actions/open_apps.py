@@ -3,7 +3,7 @@ from config import APP_ALIASES
 from tools.app_locator import find_executable
 
 
-def open_applications(app_name):
+def open_application(app_name):
     print(f"1.Recived application name {app_name}")
     exe_name=APP_ALIASES.get(app_name.lower())
     print(f"2.Exec name {exe_name}")
