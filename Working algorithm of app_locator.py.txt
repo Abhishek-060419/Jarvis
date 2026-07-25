@@ -1,16 +1,20 @@
 Working Algorithm: app_locator.py
 1.The program starts and receives the name of an executable file (for example, Code.exe or chrome.exe).
-2.The program loads the previously saved application paths from app_paths.json into a dictionary.
+2.The program loads the previously saved application paths from apps_path.json into a dictionary.
 3.The program checks whether the executable name already exists in the dictionary.
-4.If the executable is found in the dictionary, the stored full path is returned immediately, and the search ends.
-5.If the executable is not found in the dictionary, a list of common installation directories (such as C:\Program Files, C:\Program Files (x86), and the user's AppData\Local) is prepared.
-6.The program searches each directory one at a time.
-7.For every directory, it first checks whether the directory exists. If it does not exist, it skips that directory and continues with the next one.
-8.For every valid directory, os.walk() automatically visits every folder and subfolder.
-9.Inside each folder, the program examines every file.
-10.The current filename is compared with the required executable name.
-11.If the filename matches, the complete path of the executable is constructed.
-12.The executable name and its full path are added to the dictionary.
-13.The updated dictionary is saved to app_paths.json for future use.
-14.The full path is returned, and the search stops immediately.
-15.If all directories are searched without finding the executable, the program returns None, indicating that the application could not be located.
+4.If the executable exists in the dictionary, the program verifies that the stored file path still exists on the computer.
+5.If the stored path is valid, the full path is returned immediately, and the search ends.
+6.If the stored path is no longer valid (for example, the application was moved or uninstalled), the invalid entry is removed from the dictionary, and the updated dictionary is saved back to apps_path.json.
+7.If the executable is not found in the cache, or the cached entry was invalid, the program asks Windows to locate the executable using the system PATH environment variable (shutil.which()).
+8.If Windows successfully locates the executable, the returned path is added to the dictionary, saved to apps_path.json, and immediately returned.
+9.If Windows cannot locate the executable, the program prepares a list of common installation directories (such as C:\Program Files, C:\Program Files (x86), and the user's AppData\Local\Programs).
+10.The program searches each directory one at a time.
+11.Before searching a directory, it checks whether the directory exists. If it does not exist, the directory is skipped.
+12.For every valid directory, os.walk() recursively visits every folder and subfolder.
+13.Inside each folder, the program examines every file.
+14.The current filename is compared with the required executable name.
+15.If a matching executable is found, its complete file path is constructed.
+16.The executable name and its full path are added to the dictionary.
+17.The updated dictionary is saved to apps_path.json so future searches can retrieve the path instantly.
+18.The full path is returned immediately, and the search stops.
+19.If all search methods (cache lookup, system PATH, and directory search) fail to locate the executable, the program returns None, indicating that the application could not be found.
