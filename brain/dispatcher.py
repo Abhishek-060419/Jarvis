@@ -7,9 +7,14 @@ def dispatch(command):
 
     if intent == "OPEN_APP":
         if parameter:
-            speak(f"Opening {parameter}.")
-            open_application(parameter)
+            speak(f"Opening {parameter}.")  
+            success=open_application(parameter)
+
+            if not success:
+                speak(f"Sorry boss, I couldn't find an application called {parameter}.")
+
             return True
+        
         else:
             print("❌ No application specified.")
             return True
@@ -19,5 +24,5 @@ def dispatch(command):
         return False
 
     else:
-        print(f"⚠️ Intent '{intent}' not implemented yet.")
+        speak("Sorry boss, I didn't understand that command.")
         return True

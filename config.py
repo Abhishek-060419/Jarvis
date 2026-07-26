@@ -44,7 +44,10 @@ APP_ALIASES = {
 
     #Creative
     "davinci": "Resolve.exe",
+    "da vinci": "Resolve.exe",
+    "da vinci resolve": "Resolve.exe",
     "davinci resolve": "Resolve.exe",
+
 }
 
 SEARCH_PATHS = [

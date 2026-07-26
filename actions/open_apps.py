@@ -10,14 +10,14 @@ def open_application(app_name):
 
     if exe_name is None:
         print(f"Unknown Application: {app_name}")
-        return 
+        return False
 
     path=find_executable(exe_name)
     print(f"3.found path {path}")
 
     if path is None:
         print("Path not found!")
-        return 
+        return False
 
     print(f"4.Launching app")
 
@@ -25,5 +25,7 @@ def open_application(app_name):
     try:
         process = subprocess.Popen(path)
         print("Step 5: Process started. PID =", process.pid)
+        return True
     except Exception as e:
         print("ERROR:", e)
+        return False
