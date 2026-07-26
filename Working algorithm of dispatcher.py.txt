@@ -1,0 +1,9 @@
+Working Algorithm
+1. Receive the parsed command.
+2. Extract the intent and parameter.
+3. Check if the intent is valid.
+4. Match the intent with the corresponding action.
+5. Call the appropriate function.
+   a. OPEN_APP      → open_application(parameter)
+6. If the intent is not recognized, display an error message.
+7. End.

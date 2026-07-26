@@ -1,3 +1,5 @@
+import string
+
 INTENT={
     "OPEN_APP":["open","launch","start"],
     "CLOSE_APP":["close","terminate"],
@@ -26,6 +28,7 @@ def normalize(text):
 def parse(text):
     text=text.lower()
     text=normalize(text)
+    text = text.translate(str.maketrans("", "", string.punctuation))
     words=text.split()  
 
     for intent, keywords in INTENT.items():
