@@ -1,8 +1,8 @@
 {
-    "msedge.exe": "C:\\Program Files (x86)\\Microsoft\\Copilot\\Application\\150.0.4078.65\\msedge.exe",
     "Code.exe": "C:\\Users\\abhis\\AppData\\Local\\Programs\\Microsoft VS Code\\Code.exe",
     "calc.exe": "C:\\WINDOWS\\system32\\calc.exe",
     "notepad.exe": "C:\\WINDOWS\\system32\\notepad.exe",
     "cmd.exe": "C:\\WINDOWS\\system32\\cmd.exe",
-    "Resolve.exe": "C:\\Program Files\\Blackmagic Design\\DaVinci Resolve\\Resolve.exe"
+    "Resolve.exe": "C:\\Program Files\\Blackmagic Design\\DaVinci Resolve\\Resolve.exe",
+    "msedge.exe": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\150.0.4078.83\\msedge.exe"
 }

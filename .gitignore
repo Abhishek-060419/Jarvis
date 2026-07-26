@@ -22,3 +22,5 @@ Thumbs.db
 models/piper/*
 
 *.wav
+
+/TODO.txt

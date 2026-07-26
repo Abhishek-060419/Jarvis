@@ -4,6 +4,7 @@ APP_ALIASES = {
     # Browsers
     "chrome": "chrome.exe",
     "google chrome": "chrome.exe",
+    "ms edge":"msedge.exe",
     "edge": "msedge.exe",
     "microsoft edge": "msedge.exe",
 
