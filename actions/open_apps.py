@@ -21,7 +21,7 @@ def open_application(app_name):
 
     print(f"4.Launching app")
 
-    #subprocess.Popen(path)
+    #use a new process to open the application
     try:
         process = subprocess.Popen(path)
         print("Step 5: Process started. PID =", process.pid)

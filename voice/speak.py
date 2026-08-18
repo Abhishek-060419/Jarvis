@@ -1,8 +1,8 @@
 from pathlib import Path
-from piper.voice import PiperVoice
-import wave
-import winsound
-from piper.config import SynthesisConfig
+from piper.voice import PiperVoice #text-to-speech engine/model interface (a class used to load the voice model)
+import wave #used to create wav files 
+import winsound #used for audio playback
+from piper.config import SynthesisConfig #used to control features of the voice
 
 MODEL_PATH = (
     Path(__file__).resolve().parent.parent

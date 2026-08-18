@@ -24,7 +24,11 @@ audio_chunks = []
 silence_count = 0
 speech_detected = False
 
-def process_audio(indata, frames, time_info, status):
+def process_audio(indata #actual audio samples from microphone
+                  ,frames #how many audio samples are contained in this indata
+                  ,time_info #timestamps related to the audio stream
+                  ,status #any warnings or errors
+                  ):
     global silence_count, speech_detected
 
     if status:
@@ -45,7 +49,7 @@ def process_audio(indata, frames, time_info, status):
 
     # Store audio only after speech has started
     if speech_detected:
-        audio_chunks.append(indata.copy())
+        audio_chunks.append(indata.copy()) #indata is reference to a buffer, so copy() creates a separate numpy array for the same
 
         # Count silence only after speech has started
         if volume <= THRESHOLD:
@@ -63,9 +67,10 @@ def listen():
 
     print("🎙 Waiting for speech...")
 
+    #sound device python library is used to record audio using our recording device(microphone) and play it using speakers
     with sd.InputStream(
-        samplerate=SAMPLE_RATE,
-        channels=CHANNELS,
+        samplerate=SAMPLE_RATE,#how many times per second the microphone records sound samples
+        channels=CHANNELS,#how many separate audio streams are being recorded
         callback=process_audio,
     ):
         print("\n🎤 Recording started...")
@@ -96,15 +101,15 @@ def listen():
                     print("Maximum speech duration reached.")
                     break
 
-            time.sleep(0.01)
+            time.sleep(0.01) #without a slight break, the loop would run as fast as the cpu, causing unnecessary checks and heavy load
 
     if not audio_chunks:
         return None
 
-    audio = np.concatenate(audio_chunks, axis=0)
+    audio = np.concatenate(audio_chunks, axis=0) #creates a single nummpy array with our full audio
 
-    OUTPUT_PATH.parent.mkdir(parents=True, exist_ok=True)
-    sf.write(OUTPUT_PATH, audio, SAMPLE_RATE)
+    OUTPUT_PATH.parent.mkdir(parents=True, exist_ok=True) 
+    sf.write(OUTPUT_PATH, audio, SAMPLE_RATE)  #soundfile library is used to read and write audio files
 
     return str(OUTPUT_PATH)
 

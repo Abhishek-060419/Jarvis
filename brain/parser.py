@@ -28,8 +28,11 @@ def normalize(text):
 def parse(text):
     text=text.lower()
     text=normalize(text)
-    text = text.translate(str.maketrans("", "", string.punctuation))
-    words=text.split()  
+    #remove all punctuations
+    text = text.translate(str.maketrans("", #replace nothing
+                                         "", #with nothing
+                                           string.punctuation))#delete punctuations
+    words=text.split()  #array of words
 
     for intent, keywords in INTENT.items():
         for keyword in keywords:

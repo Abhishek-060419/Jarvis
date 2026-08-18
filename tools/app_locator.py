@@ -38,7 +38,7 @@ def find_executable(exe_name):
         del paths[exe_name]
         save_apps_path(paths)
 
-    system_path = shutil.which(exe_name)
+    system_path = shutil.which(exe_name) #search directories and return the path variable
 
     if system_path:
         print("Found in system PATH.")
