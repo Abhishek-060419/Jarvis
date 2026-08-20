@@ -48,6 +48,12 @@ INTENT={
     "EXIT_ASSISTANT":["exit","goodbye","quit"]
 }
 
+INTENT["SEARCH_WEB"] = sorted(
+    INTENT["SEARCH_WEB"],
+    key=len,
+    reverse=True
+)#for sorting the search web phrases by length
+
 NORMALIZATION = {
     "turn off": "shutdown",
     "power off": "shutdown"
