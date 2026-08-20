@@ -65,7 +65,7 @@ def normalize(text):
         text=text.replace(phrase,replacement)
     return text
 
-def parse_test(text):
+def parse(text):
     text=text.lower()
     text=normalize(text)
     #remove all punctuations
