@@ -8,6 +8,7 @@ INTENT={
                     "search the web for",
                     "search online",
                     "search online for",
+                    "search",
 
                     "google",
                     "google for",
@@ -64,7 +65,7 @@ def normalize(text):
         text=text.replace(phrase,replacement)
     return text
 
-def parse(text):
+def parse_test(text):
     text=text.lower()
     text=normalize(text)
     #remove all punctuations
@@ -75,16 +76,18 @@ def parse(text):
 
     for intent, keywords in INTENT.items():
         for keyword in keywords:
-            if keyword in words:
-                indx=words.index(keyword)
-                parameter=" ".join(words[indx+1:])
-                if parameter=="":
-                    parameter=None
+            phrase_words=keyword.split()
+            window_size=len(phrase_words)
+            for i in range(0,len(words)-window_size+1):
+                if words[i:window_size+i]==phrase_words:
+                    parameter=" ".join(words[window_size+i:])
+                    if parameter=="":
+                        parameter=None
 
-                return{
-                    "intent":intent,
-                    "parameter":parameter
-                }
+                    return{
+                        "intent":intent,
+                        "parameter":parameter
+                    }
             
     
     return{
