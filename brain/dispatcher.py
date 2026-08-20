@@ -20,7 +20,7 @@ def dispatch(command):
             print("❌ No application specified.")
             return True
 
-    elif intent=="SEARCH_WEB":
+    elif intent == "SEARCH_WEB":
         speak("Searching web")
         success=search_web(parameter)
 
