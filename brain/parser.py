@@ -3,7 +3,39 @@ import string
 INTENT={
     "OPEN_APP":["open","launch","start"],
     "CLOSE_APP":["close","terminate"],
-    "SEARCH_WEB":["search","find","google"],
+    "SEARCH_WEB":[  "search for",
+                    "search the web",
+                    "search the web for",
+                    "search online",
+                    "search online for",
+
+                    "google",
+                    "google for",
+                    "google search",
+                    "google search for",
+
+                    "look up",
+                    "look this up",
+                    "look it up",
+                    "look for",
+
+                    "find",
+                    "find information",
+                    "find information about",
+                    "find information on",
+                    "find out",
+                    "find out about",
+                    "find out what",
+
+                    "look for information",
+                    "look for information about",
+                    "look for information on",
+
+                    "search online for information",
+                    "search the internet",
+                    "search the internet for",
+                    "search online for information about"],
+
     "PLAY_MUSIC":["play"],
     "STOP_MUSIC":["stop","pause"],
     "GET_TIME":["time"],
@@ -15,6 +47,7 @@ INTENT={
     "WEATHER":["weather"],
     "EXIT_ASSISTANT":["exit","goodbye","quit"]
 }
+
 NORMALIZATION = {
     "turn off": "shutdown",
     "power off": "shutdown"
