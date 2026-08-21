@@ -1,19 +1,23 @@
 Working Algorithm
-1.The parse() function is called with the transcribed text string as input.
-2.The input text is converted to lowercase using lower() so that command recognition becomes case-insensitive.
-3.Before parsing begins, the text is passed to the normalize() function.
-4.The normalize() function scans the text for predefined multi-word phrases (such as "turn off" and "power off") and replaces them with a single standardized keyword (such as "shutdown"). This simplifies intent recognition and avoids handling multi-word keywords separately.
-5.(Version 1) The parser originally searched for commands using keyword in text, which searched the entire sentence as one string.
-6.This approach caused two problems:
-Commands were matched as substrings (e.g., "play" matched "display").
-Parameter extraction using string slicing depended on the keyword being at the beginning of the sentence.
-7.(Version 2 Improvement) To solve these issues, the normalized sentence is split into individual words using split(), creating a list of words.
-8.The parser iterates through every intent in the INTENTS dictionary.
-9.For each intent, the parser iterates through all of its associated keywords.
-10.Instead of checking keyword in text, the parser now checks keyword in words, ensuring that only complete words are matched.
-11.If a keyword is found, its position in the sentence is obtained using words.index(keyword).
-12.Everything appearing after the keyword is extracted by joining the remaining words using " ".join(words[index + 1:]). This becomes the command parameter.
-13.If no words remain after the keyword, the parameter is set to None.
-14.The parser immediately returns a dictionary containing the detected intent and its corresponding parameter.
-15.If all intents and keywords are checked without finding a match, the parser returns a dictionary with both "intent" and "parameter" set to None.
-16.The returned dictionary is then passed to the actions module, where the corresponding operation (such as opening an application, searching the web, or shutting down the system) will be executed.
+1. The parse() function is called with the transcribed text string as input.
+2. The input text is converted to lowercase using lower() so that command recognition becomes case-insensitive.
+3. Before parsing begins, the text is passed to the normalize() function.
+4. The normalize() function scans the text for predefined multi-word phrases  and replaces them with standardized keywords.
+5. All punctuation is removed from the normalized text using string.punctuation and translate().
+6. The cleaned sentence is split into individual words using split(), creating a list of words.
+7. The parser iterates through every intent in the INTENT dictionary.
+8. For each intent, the parser iterates through all of its associated command phrases.
+9. The SEARCH_WEB phrases are sorted from longest to shortest using sorted(..., key=len, reverse=True) so that more specific multi-word phrases are checked before shorter phrases.
+10. Each command phrase is split into individual words using split(), creating a phrase_words list.
+11. The number of words in the command phrase is calculated and stored as window_size.
+12. A sliding window is moved through the input word list using range(0, len(words) - window_size + 1).
+13. At each position, the words within the current window are extracted using list slicing.
+14. The extracted window is compared with phrase_words to check whether the complete command phrase is present in the input.
+15. If the window matches the command phrase, the corresponding intent is identified.
+16. Everything appearing after the matched command phrase is extracted using words[i + window_size:].
+17. The extracted words are joined using " ".join() to form the command parameter.
+18. If no words remain after the matched command phrase, the parameter is set to None.
+19. The parser immediately returns a dictionary containing the detected intent and its corresponding parameter.
+20. If all intents and command phrases are checked without finding a match, the parser returns a dictionary with both 
+"intent" and "parameter" set to None.
+21. The returned dictionary is passed to the dispatcher, where the corresponding action is executed based on the detected intent.
