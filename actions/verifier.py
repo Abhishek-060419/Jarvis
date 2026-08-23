@@ -66,6 +66,8 @@ Action dependency rules:
 21. Use "CORRECT" when the parser's interpretation already represents the user's intended action or actions.
 22. Use "CORRECTED" when you change the parser's intent, parameter, or action plan.
 23. Use "AMBIGUOUS" when the user's intended action cannot be determined with sufficient confidence.
+24. If the status is AMBIGUOUS, return an empty actions list.
+25. If the status is AMBIGUOUS, do not invent or guess an intent or parameter.
 
 Example:
 If the user says:
@@ -142,7 +144,6 @@ def verify(command,parsed_intent,parsed_parameter):
     #conver the json result into python dictionary
     result=response.json()
 
-    print(result)
 
     #obtain only the Qwen's actual response from the larger response
     content=result["choices"][0]["message"]["content"]
