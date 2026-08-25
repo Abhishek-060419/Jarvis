@@ -1,8 +1,9 @@
 from voice.listen import listen
 from brain.transcribe import transcribe
 from brain.parser import parse
-from brain.dispatcher import dispatch
+from brain.dispatcher import dispatch_actions
 from voice.speak import speak
+from actions.verifier import verify
 
 speak("Welcome back, boss. All systems operational. How may I assist you today?")
 while True:
@@ -21,7 +22,14 @@ while True:
 
     print(command)
 
-    should_continue=dispatch(command)
+    verified=verify(text,command["intent"],command["parameter"])
+
+    print(verified)
+
+    if not verified:
+        continue
+
+    should_continue = dispatch_actions(verified["actions"])
 
     if not should_continue:
         break
