@@ -30,3 +30,4 @@ models/piper/*
 tempmain.py
 test_browser.py
 
+data/apps_path.json
