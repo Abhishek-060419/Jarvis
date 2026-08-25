@@ -178,6 +178,7 @@ def verify(command,parsed_intent,parsed_parameter):
         parameter=action.get("parameter")
         if parameter is None:
             return None
+        
 
         #check whether the current action depends on any other action given in actions or if depends_on is out of bounds or if
         #depends on itself
