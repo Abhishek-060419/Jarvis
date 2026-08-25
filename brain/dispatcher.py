@@ -1,4 +1,4 @@
-from actions.open_apps import open_application
+from actions.open_apps import open_application,find_application_path
 from voice.speak import speak
 from actions.search_web import search_web
 
@@ -35,3 +35,47 @@ def dispatch(command):
     else:
         speak("Sorry boss, I didn't understand that command.")
         return True
+
+def dispatch_actions(actions):
+    for index,action in enumerate(actions):
+
+        intent=action["intent"]
+        parameter=action["parameter"]
+        depends_on=action["depends_on"]
+
+        if intent=="SEARCH_WEB" and depends_on is not None:
+
+            dependency=actions[depends_on]
+            if dependency["intent"]!="OPEN_APP":
+                return False
+            
+            browser_name=dependency["parameter"]
+            browser_path=find_application_path(browser_name)
+
+            if browser_path is None:
+                speak(f"Sorry boss, I was not able to  find an application called {browser_name}.")
+                return True
+            
+            success=search_web(parameter,browser_path)
+            if not success:
+                speak("Sorry boss,  I couldn't perform the search and happy onam")
+
+            
+        else:
+            if intent=="OPEN_APP":
+                skip=False
+
+                for other_action in actions:
+                    if(other_action["intent"]=="SEARCH_WEB" and other_action["depends_on"]==index):
+                        skip=True
+                        break
+                print("OPEN_APP skip =", skip)
+                if skip:
+                    continue
+
+            running=dispatch(action)
+
+            if not running:
+                return False
+
+    return True
