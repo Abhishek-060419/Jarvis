@@ -37,6 +37,9 @@ def dispatch(command):
         return True
 
 def dispatch_actions(actions):
+
+    #actions is the list from the verified json from verifier.py
+
     for index,action in enumerate(actions):
 
         intent=action["intent"]
@@ -65,6 +68,7 @@ def dispatch_actions(actions):
             if intent=="OPEN_APP":
                 skip=False
 
+            #check whether any later actions depends_on open app so that redudant opening can be avoided
                 for other_action in actions:
                     if(other_action["intent"]=="SEARCH_WEB" and other_action["depends_on"]==index):
                         skip=True

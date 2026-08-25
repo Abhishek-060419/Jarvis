@@ -2,7 +2,7 @@ import subprocess
 from config import APP_ALIASES
 from tools.app_locator import find_executable
 
-
+#returns the path of an executable application or None if not found
 def find_application_path(app_name):
     exe_name=APP_ALIASES.get(app_name.lower())
     if exe_name is None:

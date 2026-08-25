@@ -2,6 +2,7 @@ import webbrowser
 from urllib.parse import quote
 import subprocess
 
+#use a browser path and url to open a custom web page 
 def search_web(query,browser_path=None):
     if not query:
         return False
