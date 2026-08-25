@@ -136,6 +136,7 @@ def verify(command,parsed_intent,parsed_parameter):
     }
 
     #Send the system rules and the user prompt to the Qwen model using the  llama server 
+    #respoonse is json
     response=requests.post(
         f"{Server_URL}/v1/chat/completions",
         json=data
@@ -144,12 +145,45 @@ def verify(command,parsed_intent,parsed_parameter):
     #conver the json result into python dictionary
     result=response.json()
 
+#structure of result:
+
+# result:
+# {
+#     "choices": [
+#         {
+#             "message": {
+#                 "role": "assistant",
+#                 "content": "{...Qwen's JSON response as a string...}"
+#             }
+#         }
+#     ],
+#     ...
+# }
 
     #obtain only the Qwen's actual response from the larger response
     content=result["choices"][0]["message"]["content"]
 
+#structure of content:
+
+# content:
+# {
+#     "status": "CORRECTED",
+#     "actions": [...]
+# }
+# Note: this is still a JSON-formatted string, not a Python dictionary.
+
     #convert Qwen's JSON response from a string into a python dictionary
     verified=json.loads(content)
+
+#structure of verified:
+
+# verified:
+# {
+#     "status": "CORRECTED",
+#     "actions": [...]
+# }
+# This is now a Python dictionary, so we can access its values using keys.
+
 
     #check if the status in response message is among what we explicitly asked
     status=verified.get("status")
@@ -183,19 +217,28 @@ def verify(command,parsed_intent,parsed_parameter):
         #check whether the current action depends on any other action given in actions or if depends_on is out of bounds or if
         #depends on itself
         depends_on=action.get("depends_on")
+
+        #check if depends_on is not of correct datatype
         if depends_on is not None and not isinstance(depends_on,int):
             return None
+
+        #check if depends_on is out of bounds
         if depends_on is not None and (depends_on<0 or depends_on>=len(actions)):
             return None
 
+        #check if depends_on is giving the same action
         if depends_on==index:
             return None
 
         if status=="CORRECT":
+            #if correct then there should only be the original parsed intent and parameter
+
             if len(actions)!=1:
                 return None
+
             if intent!=parsed_intent:
                 return None
+            
             if parameter.lower()!=str(parsed_parameter).lower():
                 return None
 
