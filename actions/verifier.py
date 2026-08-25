@@ -190,6 +190,15 @@ def verify(command,parsed_intent,parsed_parameter):
         if depends_on==index:
             return None
 
+        if status=="CORRECT":
+            if len(actions)!=1:
+                return None
+            if intent!=parsed_intent:
+                return None
+            if parameter.lower()!=str(parsed_parameter).lower():
+                return None
+
+
 
     return verified
         
